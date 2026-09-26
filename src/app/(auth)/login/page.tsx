@@ -29,9 +29,9 @@ export default async function LoginPage() {
         <div className="mt-8 rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-surface)] p-5 text-sm">
           <p className="eyebrow text-[#6B6B85]">Demo accounts</p>
           <ul className="mt-3 space-y-1.5 text-[#C9C7E0]">
-            <li>admin@campus.edu — admin dashboard</li>
-            <li>organizer@campus.edu — society organizer</li>
-            <li>student@campus.edu — student</li>
+            <li>admin@uetpeshawar.edu.pk — admin dashboard</li>
+            <li>organizer@uetpeshawar.edu.pk — society organizer</li>
+            <li>student@uetpeshawar.edu.pk — student</li>
           </ul>
           <p className="mt-3 text-[#6B6B85]">Password for all three: campus1234</p>
         </div>

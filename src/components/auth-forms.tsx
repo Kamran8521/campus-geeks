@@ -3,7 +3,11 @@
 import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { login, signup, type AuthState } from "@/app/actions/auth";
+import { CAMPUS_EMAIL_DOMAIN, CAMPUS_NAME } from "@/lib/campus";
 import { CATEGORY_LIST } from "@/lib/categories";
+
+const emailPattern = `[^@\\s]+@${CAMPUS_EMAIL_DOMAIN.replace(/\./g, "\\.")}`;
+const emailHint = `${CAMPUS_NAME} students only — use your @${CAMPUS_EMAIL_DOMAIN} address.`;
 
 const inputClass =
   "w-full rounded-xl border border-white/12 bg-[#0B0B14] px-4 py-3 text-[color:var(--color-chalk)] outline-none transition placeholder:text-[#6B6B85] focus:border-white/50";
@@ -48,9 +52,12 @@ export function LoginForm() {
           type="email"
           required
           autoComplete="email"
-          defaultValue="student@campus.edu"
+          defaultValue="student@uetpeshawar.edu.pk"
+          pattern={emailPattern}
+          title={emailHint}
           className={`${inputClass} mt-2`}
         />
+        <p className="mt-2 text-xs text-[#6B6B85]">{emailHint}</p>
       </div>
       <div>
         <label className={labelClass} htmlFor="password">
@@ -99,8 +106,12 @@ export function SignupForm() {
             name="email"
             type="email"
             required
+            pattern={emailPattern}
+            title={emailHint}
+            placeholder={`you@${CAMPUS_EMAIL_DOMAIN}`}
             className={`${inputClass} mt-2`}
           />
+          <p className="mt-2 text-xs text-[#6B6B85]">{emailHint}</p>
         </div>
         <div>
           <label className={labelClass} htmlFor="signup-password">

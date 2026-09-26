@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowUpRight, AtSign, Globe } from "lucide-react";
+import { CategoryTheme } from "@/components/category-theme";
+import { getCategory } from "@/lib/categories";
 import { getSocieties } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
@@ -16,6 +18,7 @@ export default async function SocietiesPage() {
 
   return (
     <div className="grain mx-auto max-w-7xl px-5 py-16 sm:px-8 md:py-24">
+      <CategoryTheme category={getCategory("societies")} />
       <p className="eyebrow text-[color:var(--color-violet)]">Societies</p>
       <h1 className="display mt-3 text-5xl leading-[0.92] text-[color:var(--color-chalk)] md:text-7xl">
         The people behind

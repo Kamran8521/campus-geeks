@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { ArrowRight, Trophy } from "lucide-react";
+import { CategoryTheme } from "@/components/category-theme";
 import { EventCard } from "@/components/event-card";
 import { MatchCard } from "@/components/match-card";
 import { Reveal } from "@/components/reveal";
@@ -49,6 +50,7 @@ export default async function SportsPage() {
 
   return (
     <div className="grain">
+      <CategoryTheme category={getCategory("sports")} />
       <section className="relative overflow-hidden border-b border-[color:var(--color-line)]">
         <Image src={sports.cover} alt="" fill priority className="object-cover opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#05050A] via-[#05050A]/80 to-[#05050A]/40" />

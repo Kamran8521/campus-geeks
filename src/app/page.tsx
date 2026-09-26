@@ -71,16 +71,24 @@ export default async function HomePage() {
     <div className="grain">
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-[color:var(--color-line)]">
-        {hero ? (
-          <Image
-            src={hero.coverImage ?? heroCategory!.cover}
-            alt=""
-            fill
-            priority
-            className="object-cover opacity-30"
-          />
-        ) : null}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#05050A]/70 via-[#05050A]/85 to-[#05050A]" />
+        <video
+          className="absolute inset-0 h-full w-full object-cover opacity-45 motion-reduce:hidden"
+          src="/media/campus-hero.mp4"
+          poster="/media/campus-hero-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 hidden bg-cover bg-center opacity-40 motion-reduce:block"
+          style={{ backgroundImage: "url(/media/campus-hero-poster.jpg)" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#05050A]/75 via-[#05050A]/88 to-[#05050A]" />
+        <div className="absolute inset-0 bg-[radial-gradient(900px_500px_at_15%_20%,rgba(124,92,255,0.22),transparent_60%)]" />
         <div className="absolute -left-40 top-10 h-96 w-96 rounded-full bg-[#7C5CFF]/25 blur-[140px]" />
         <div className="absolute -right-32 top-40 h-96 w-96 rounded-full bg-[#31E981]/15 blur-[150px]" />
 

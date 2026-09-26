@@ -31,6 +31,8 @@ export type Category = {
   accent: string;
   accentSoft: string;
   gradient: string;
+  /// Full-page backdrop applied when browsing this category
+  pageBackground: string;
   icon: LucideIcon;
   cover: string;
   /// Finer grained activity types organizers can pick
@@ -48,6 +50,8 @@ export const CATEGORIES: Record<CategoryKey, Category> = {
     accent: "#F0409C",
     accentSoft: "rgba(240, 64, 156, 0.16)",
     gradient: "linear-gradient(135deg, #2B0B3F 0%, #7A1247 55%, #F0409C 100%)",
+    pageBackground:
+      "radial-gradient(1100px 620px at 78% -8%, rgba(240,64,156,0.30), transparent 62%), radial-gradient(900px 560px at 4% 22%, rgba(124,92,255,0.22), transparent 58%), linear-gradient(180deg, #120514 0%, #06040B 58%, #05050A 100%)",
     icon: Music4,
     cover: UNSPLASH("photo-1470229722913-7c0e2dbbafd3"),
     tags: ["Live performance", "Open mic", "Jam session", "Listening party", "Concert", "DJ night", "Music workshop"],
@@ -59,9 +63,11 @@ export const CATEGORIES: Record<CategoryKey, Category> = {
     accent: "#31E981",
     accentSoft: "rgba(49, 233, 129, 0.14)",
     gradient: "linear-gradient(135deg, #04231A 0%, #0B6B43 55%, #31E981 100%)",
+    pageBackground:
+      "radial-gradient(1000px 600px at 82% -6%, rgba(49,233,129,0.26), transparent 60%), radial-gradient(880px 520px at 0% 30%, rgba(76,201,240,0.16), transparent 58%), linear-gradient(180deg, #03140E 0%, #05070B 60%, #05050A 100%)",
     icon: Dumbbell,
-    cover: UNSPLASH("photo-1517649763962-0c623066013b"),
-    tags: ["Football", "Futsal", "Cricket", "Basketball", "Volleyball", "Badminton", "Table tennis", "Athletics"],
+    cover: UNSPLASH("photo-1760174034302-e4e8177569ff"),
+    tags: ["Football", "Futsal 5v5", "Cricket", "Basketball", "Volleyball", "Badminton", "Table tennis", "Athletics"],
   },
   trips: {
     key: "trips",
@@ -70,6 +76,8 @@ export const CATEGORIES: Record<CategoryKey, Category> = {
     accent: "#FF8A3D",
     accentSoft: "rgba(255, 138, 61, 0.16)",
     gradient: "linear-gradient(135deg, #231204 0%, #8A3E10 55%, #FF8A3D 100%)",
+    pageBackground:
+      "radial-gradient(1100px 620px at 76% -10%, rgba(255,138,61,0.28), transparent 62%), radial-gradient(900px 540px at 6% 26%, rgba(255,209,102,0.16), transparent 58%), linear-gradient(180deg, #150A04 0%, #0A0608 60%, #05050A 100%)",
     icon: Mountain,
     cover: UNSPLASH("photo-1470071459604-3b5ec3a7fe05"),
     tags: ["Hiking", "Day trip", "Overnight trip", "Camping", "City tour", "Adventure"],
@@ -81,6 +89,8 @@ export const CATEGORIES: Record<CategoryKey, Category> = {
     accent: "#FFD166",
     accentSoft: "rgba(255, 209, 102, 0.16)",
     gradient: "linear-gradient(135deg, #2A1E05 0%, #8A6B12 55%, #FFD166 100%)",
+    pageBackground:
+      "radial-gradient(1000px 620px at 80% -8%, rgba(255,209,102,0.26), transparent 60%), radial-gradient(900px 560px at 2% 28%, rgba(240,64,156,0.18), transparent 58%), linear-gradient(180deg, #141004 0%, #09070A 60%, #05050A 100%)",
     icon: Palette,
     cover: UNSPLASH("photo-1513364776144-60967b0f800f"),
     tags: ["Painting", "Sketching", "Pottery", "Clay art", "Texture art", "Crochet", "Calligraphy", "Photography"],
@@ -92,6 +102,8 @@ export const CATEGORIES: Record<CategoryKey, Category> = {
     accent: "#E23C3C",
     accentSoft: "rgba(226, 60, 60, 0.16)",
     gradient: "linear-gradient(135deg, #160406 0%, #6B0F14 55%, #E23C3C 100%)",
+    pageBackground:
+      "radial-gradient(1100px 600px at 50% -12%, rgba(226,60,60,0.26), transparent 60%), radial-gradient(800px 520px at 10% 34%, rgba(124,92,255,0.14), transparent 58%), linear-gradient(180deg, #140406 0%, #08050A 60%, #04040A 100%)",
     icon: Clapperboard,
     cover: UNSPLASH("photo-1489599849927-2ee91cede3ba"),
     tags: ["Movie night", "Screening", "Film club", "Documentary", "Short film night"],
@@ -103,6 +115,8 @@ export const CATEGORIES: Record<CategoryKey, Category> = {
     accent: "#4CC9F0",
     accentSoft: "rgba(76, 201, 240, 0.16)",
     gradient: "linear-gradient(135deg, #04121F 0%, #0B4C6B 55%, #4CC9F0 100%)",
+    pageBackground:
+      "radial-gradient(1000px 600px at 84% -8%, rgba(76,201,240,0.26), transparent 60%), radial-gradient(900px 560px at 0% 28%, rgba(124,92,255,0.18), transparent 58%), linear-gradient(180deg, #04121F 0%, #05080F 60%, #05050A 100%)",
     icon: Cpu,
     cover: UNSPLASH("photo-1518770660439-4636190af475"),
     tags: ["Hackathon", "Coding competition", "Robotics", "AI workshop", "Bootcamp", "Tech talk"],
@@ -114,6 +128,8 @@ export const CATEGORIES: Record<CategoryKey, Category> = {
     accent: "#B892FF",
     accentSoft: "rgba(184, 146, 255, 0.16)",
     gradient: "linear-gradient(135deg, #150A2B 0%, #43227F 55%, #B892FF 100%)",
+    pageBackground:
+      "radial-gradient(1000px 600px at 78% -8%, rgba(184,146,255,0.26), transparent 60%), radial-gradient(880px 540px at 4% 26%, rgba(45,212,191,0.14), transparent 58%), linear-gradient(180deg, #100A1C 0%, #07060D 60%, #05050A 100%)",
     icon: Users,
     cover: UNSPLASH("photo-1523580494863-6f3031224c94"),
     tags: ["Society event", "Student meetup", "Social gathering", "Orientation", "Panel"],
@@ -125,6 +141,8 @@ export const CATEGORIES: Record<CategoryKey, Category> = {
     accent: "#7C5CFF",
     accentSoft: "rgba(124, 92, 255, 0.16)",
     gradient: "linear-gradient(135deg, #0B0722 0%, #3A1E9E 55%, #7C5CFF 100%)",
+    pageBackground:
+      "radial-gradient(1000px 620px at 80% -10%, rgba(124,92,255,0.30), transparent 60%), radial-gradient(900px 540px at 4% 30%, rgba(49,233,129,0.14), transparent 58%), linear-gradient(180deg, #0B0722 0%, #06050F 60%, #05050A 100%)",
     icon: Gamepad2,
     cover: UNSPLASH("photo-1542751371-adc38448a05e"),
     tags: ["Esports", "LAN party", "Console night", "Chess", "Board games"],
@@ -136,6 +154,8 @@ export const CATEGORIES: Record<CategoryKey, Category> = {
     accent: "#2DD4BF",
     accentSoft: "rgba(45, 212, 191, 0.16)",
     gradient: "linear-gradient(135deg, #04201E 0%, #0B6B62 55%, #2DD4BF 100%)",
+    pageBackground:
+      "radial-gradient(1000px 600px at 80% -8%, rgba(45,212,191,0.26), transparent 60%), radial-gradient(880px 540px at 2% 28%, rgba(255,209,102,0.14), transparent 58%), linear-gradient(180deg, #04201E 0%, #05090C 60%, #05050A 100%)",
     icon: Wrench,
     cover: UNSPLASH("photo-1531482615713-2afd69097998"),
     tags: ["Workshop", "Masterclass", "Career session", "Study jam", "Skill share"],

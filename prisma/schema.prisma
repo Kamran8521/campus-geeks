@@ -23,8 +23,10 @@ model User {
   interests    String     @default("")
   createdAt    DateTime   @default(now())
 
-  events    Event[]    @relation("CreatedEvents")
-  bookmarks Bookmark[]
+  events       Event[]          @relation("CreatedEvents")
+  bookmarks    Bookmark[]
+  chatMessages ChatMessage[]
+  chatJoins    ChatRoomMember[]
 }
 
 model Society {
@@ -156,6 +158,45 @@ model TournamentTeam {
   drawn        Int        @default(0)
   lost         Int        @default(0)
   points       Int        @default(0)
+}
+
+/// Category themed chat rooms students enter from /rooms
+model ChatRoom {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  topic       String
+  /// Category key, see src/lib/categories.ts
+  category    String   @default("societies")
+  createdAt   DateTime @default(now())
+
+  messages ChatMessage[]
+  members  ChatRoomMember[]
+}
+
+model ChatRoomMember {
+  id       String   @id @default(cuid())
+  roomId   String
+  userId   String
+  joinedAt DateTime @default(now())
+
+  room ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([roomId, userId])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  roomId    String
+  userId    String
+  body      String
+  createdAt DateTime @default(now())
+
+  room ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([roomId, createdAt])
 }
 
 model Bookmark {

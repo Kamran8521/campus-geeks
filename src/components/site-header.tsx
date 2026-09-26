@@ -15,6 +15,7 @@ const NAV = [
   { href: "/category/art", label: "Art" },
   { href: "/category/movies", label: "Movies" },
   { href: "/societies", label: "Societies" },
+  { href: "/rooms", label: "Rooms" },
 ];
 
 export function SiteHeader({ user }: { user: SessionUser | null }) {
