@@ -15,6 +15,7 @@ import {
   Users,
 } from "lucide-react";
 import { BookmarkButton } from "@/components/bookmark-button";
+import { CategoryTheme } from "@/components/category-theme";
 import { EventCard } from "@/components/event-card";
 import { ShareButtons } from "@/components/share-buttons";
 import { CapacityBar, StatusPill } from "@/components/status-pill";
@@ -79,6 +80,7 @@ export default async function EventPage({ params }: Props) {
 
   return (
     <div className="grain pb-24">
+      <CategoryTheme category={category} />
       <section className="relative">
         <div className="relative h-[46vh] min-h-[320px] w-full overflow-hidden md:h-[62vh]">
           <Image

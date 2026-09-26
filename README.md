@@ -7,8 +7,8 @@ society events and everything else happening around campus this week.
 
 - Next.js 16 (App Router, Server Actions, Turbopack)
 - TypeScript, Tailwind CSS v4, Framer Motion, Lucide icons
-- Prisma 7 with SQLite (better-sqlite3 driver adapter)
-- Signed HTTP-only cookie sessions (HMAC-SHA256)
+- Prisma 7 with SQLite locally, Supabase Postgres ready (driver adapters)
+- Signed HTTP-only cookie sessions (HMAC-SHA256), restricted to campus email addresses
 
 ## Getting started
 
@@ -27,9 +27,9 @@ Seeded for local development only, password `campus1234`:
 
 | Email                  | Role      |
 | ---------------------- | --------- |
-| admin@campus.edu       | ADMIN     |
-| organizer@campus.edu   | ORGANIZER |
-| student@campus.edu     | STUDENT   |
+| admin@uetpeshawar.edu.pk       | ADMIN     |
+| organizer@uetpeshawar.edu.pk   | ORGANIZER |
+| student@uetpeshawar.edu.pk     | STUDENT   |
 
 ## Scripts
 
@@ -53,6 +53,24 @@ Seeded for local development only, password `campus1234`:
 - `/create` event and sports matchup builder (submits as `PENDING`)
 - `/feed` personalized feed, `/saved` bookmarks
 - `/admin` moderation: approve, reject, feature, cancel, complete, delete, participant counts, results
+- `/rooms` and `/rooms/[slug]` category chat rooms students enter and post in
+
+## Campus sign-in
+
+Only `@uetpeshawar.edu.pk` addresses can sign up or sign in. The domain and campus name come
+from `NEXT_PUBLIC_CAMPUS_EMAIL_DOMAIN` / `NEXT_PUBLIC_CAMPUS_NAME` and are enforced in
+`src/app/actions/auth.ts` through `src/lib/campus.ts`.
+
+## Supabase and Clerk
+
+The database layer picks its Prisma driver adapter from `DATABASE_URL`: a `postgres...` URL uses
+the Postgres adapter (Supabase), anything else uses local SQLite. To move to Supabase set
+`DATABASE_URL` to the Supabase connection string, change `provider` to `postgresql` in
+`prisma/schema.prisma`, then run `npx prisma migrate dev --config prisma7.config.ts`.
+
+Clerk keys (`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`) are reserved in
+`.env.example`. Session handling lives behind `src/lib/auth.ts` (`getSessionUser`, `requireUser`,
+`requireAdmin`), so swapping to Clerk means reimplementing that module only.
 
 ## Registration model
 

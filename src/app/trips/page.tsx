@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowUpRight, Bus, Clock, MapPin, Users } from "lucide-react";
+import { CategoryTheme } from "@/components/category-theme";
 import { Reveal } from "@/components/reveal";
 import { StatusPill } from "@/components/status-pill";
 import { getSessionUser } from "@/lib/auth";
@@ -37,6 +38,7 @@ export default async function TripsPage() {
 
   return (
     <div className="grain">
+      <CategoryTheme category={category} />
       <section className="relative overflow-hidden border-b border-[color:var(--color-line)]">
         <Image src={category.cover} alt="" fill priority className="object-cover opacity-40" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#05050A] via-[#05050A]/70 to-[#05050A]/30" />

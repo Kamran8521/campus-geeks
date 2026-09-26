@@ -5,12 +5,16 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createSession, destroySession } from "@/lib/auth";
+import { CAMPUS_EMAIL_MESSAGE, isCampusEmail } from "@/lib/campus";
 import { prisma } from "@/lib/db";
 
 export type AuthState = { error?: string };
 
 const credentials = z.object({
-  email: z.string().email("Enter a valid email address."),
+  email: z
+    .string()
+    .email("Enter a valid email address.")
+    .refine(isCampusEmail, CAMPUS_EMAIL_MESSAGE),
   password: z.string().min(8, "Passwords need at least 8 characters."),
 });
 

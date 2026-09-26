@@ -16,7 +16,8 @@ const IMAGES = {
   projector: img("photo-1478720568477-152d9b164e26"),
   auditorium: img("photo-1601758124510-52d02ddb7cbd"),
   football: img("photo-1574629810360-7efbbe195018"),
-  futsalGoal: img("photo-1517927033932-b3d18e61fb3a"),
+  futsalGoal: img("photo-1760174034302-e4e8177569ff"),
+  futsalNight: img("photo-1517927033932-b3d18e61fb3a"),
   track: img("photo-1461896836934-ffe607ba8211"),
   runners: img("photo-1552674605-db6ffd4facb5"),
   basketball: img("photo-1546519638-68e109498ffc"),
@@ -73,6 +74,9 @@ function nextWeekday(weekday: number, weeksAhead = 0) {
 }
 
 async function main() {
+  await prisma.chatMessage.deleteMany();
+  await prisma.chatRoomMember.deleteMany();
+  await prisma.chatRoom.deleteMany();
   await prisma.bookmark.deleteMany();
   await prisma.sportsMatch.deleteMany();
   await prisma.tournamentTeam.deleteMany();
@@ -86,7 +90,7 @@ async function main() {
   const admin = await prisma.user.create({
     data: {
       name: "Amina Raza",
-      email: "admin@campus.edu",
+      email: "admin@uetpeshawar.edu.pk",
       passwordHash: password,
       role: "ADMIN",
       department: "Student Affairs",
@@ -97,7 +101,7 @@ async function main() {
   const organizer = await prisma.user.create({
     data: {
       name: "Hamza Iqbal",
-      email: "organizer@campus.edu",
+      email: "organizer@uetpeshawar.edu.pk",
       passwordHash: password,
       role: "ORGANIZER",
       department: "Computer Science",
@@ -109,7 +113,7 @@ async function main() {
   const student = await prisma.user.create({
     data: {
       name: "Zara Ahmed",
-      email: "student@campus.edu",
+      email: "student@uetpeshawar.edu.pk",
       passwordHash: password,
       role: "STUDENT",
       department: "Software Engineering",
@@ -129,7 +133,7 @@ async function main() {
         accent: "#4CC9F0",
         logoImage: IMAGES.circuit,
         instagram: "@cs.society",
-        email: "cssociety@campus.edu",
+        email: "cssociety@uetpeshawar.edu.pk",
       },
       {
         slug: "robotics-society",
@@ -140,7 +144,7 @@ async function main() {
         accent: "#7C5CFF",
         logoImage: IMAGES.codeDark,
         instagram: "@robotics.campus",
-        email: "robotics@campus.edu",
+        email: "robotics@uetpeshawar.edu.pk",
       },
       {
         slug: "music-society",
@@ -151,7 +155,7 @@ async function main() {
         accent: "#F0409C",
         logoImage: IMAGES.guitars,
         instagram: "@music.campus",
-        email: "music@campus.edu",
+        email: "music@uetpeshawar.edu.pk",
       },
       {
         slug: "fine-arts-society",
@@ -162,7 +166,7 @@ async function main() {
         accent: "#FFD166",
         logoImage: IMAGES.paint,
         instagram: "@finearts.campus",
-        email: "finearts@campus.edu",
+        email: "finearts@uetpeshawar.edu.pk",
       },
       {
         slug: "adventure-club",
@@ -173,7 +177,7 @@ async function main() {
         accent: "#FF8A3D",
         logoImage: IMAGES.ridge,
         instagram: "@adventure.campus",
-        email: "adventure@campus.edu",
+        email: "adventure@uetpeshawar.edu.pk",
       },
       {
         slug: "sports-board",
@@ -184,7 +188,7 @@ async function main() {
         accent: "#31E981",
         logoImage: IMAGES.football,
         instagram: "@sportsboard.campus",
-        email: "sports@campus.edu",
+        email: "sports@uetpeshawar.edu.pk",
       },
       {
         slug: "film-club",
@@ -195,7 +199,7 @@ async function main() {
         accent: "#E23C3C",
         logoImage: IMAGES.cinema,
         instagram: "@filmclub.campus",
-        email: "film@campus.edu",
+        email: "film@uetpeshawar.edu.pk",
       },
       {
         slug: "literary-society",
@@ -206,7 +210,7 @@ async function main() {
         accent: "#B892FF",
         logoImage: IMAGES.conference,
         instagram: "@litsoc.campus",
-        email: "litsoc@campus.edu",
+        email: "litsoc@uetpeshawar.edu.pk",
       },
     ].map((data) => prisma.society.create({ data })),
   );
@@ -279,7 +283,7 @@ async function main() {
       eligibility: "Open to all students with a valid campus card",
       googleFormUrl: form("1FAIpQLSc-movie-night"),
       organizerName: "Film Club",
-      contactInfo: "film@campus.edu",
+      contactInfo: "film@uetpeshawar.edu.pk",
       society: "film-club",
       status: "APPROVED",
       featured: true,
@@ -304,7 +308,7 @@ async function main() {
       costNote: "Includes canvas and all materials",
       googleFormUrl: form("1FAIpQLSc-texture-art"),
       organizerName: "Fine Arts Society",
-      contactInfo: "finearts@campus.edu",
+      contactInfo: "finearts@uetpeshawar.edu.pk",
       society: "fine-arts-society",
       status: "APPROVED",
       featured: true,
@@ -313,11 +317,11 @@ async function main() {
     {
       slug: "semester-2-vs-semester-4-futsal",
       title: "Semester 2 vs Semester 4",
-      subtitle: "Futsal",
+      subtitle: "Futsal · 5v5",
       description:
-        "Midweek futsal under the lights. Two halves of 20 minutes, rolling subs, referee from the Sports Board. Squad lists close the night before the match.",
+        "Midweek 5v5 futsal under the lights. Two halves of 20 minutes, rolling subs, referee from the Sports Board. Squad lists close the night before the match.",
       category: "sports",
-      tag: "Futsal",
+      tag: "Futsal 5v5",
       coverImage: IMAGES.futsalGoal,
       startAt: at(nextWeekday(3), 16),
       endAt: at(nextWeekday(3), 18),
@@ -382,7 +386,7 @@ async function main() {
       eligibility: "Students and faculty. Under 18s need a signed consent form.",
       googleFormUrl: form("1FAIpQLSc-mukshpuri"),
       organizerName: "Adventure Club",
-      contactInfo: "adventure@campus.edu · 0300 1234567",
+      contactInfo: "adventure@uetpeshawar.edu.pk · 0300 1234567",
       society: "adventure-club",
       status: "APPROVED",
       featured: true,
@@ -413,7 +417,7 @@ async function main() {
       eligibility: "Teams of 2-4, any department",
       googleFormUrl: form("1FAIpQLSc-ai-hackathon"),
       organizerName: "Computer Society",
-      contactInfo: "cssociety@campus.edu",
+      contactInfo: "cssociety@uetpeshawar.edu.pk",
       society: "computer-society",
       status: "APPROVED",
       featured: true,
@@ -475,11 +479,11 @@ async function main() {
     {
       slug: "section-a-vs-section-b-futsal",
       title: "Section A vs Section B",
-      subtitle: "Futsal · CS Department",
+      subtitle: "Futsal 5v5 · CS Department",
       description:
-        "Section rivalry week continues. Winner takes the department bragging rights and a very small trophy.",
+        "Section rivalry week continues, five a side. Winner takes the department bragging rights and a very small trophy.",
       category: "sports",
-      tag: "Futsal",
+      tag: "Futsal 5v5",
       coverImage: IMAGES.futsalGoal,
       startAt: at(nextWeekday(3, 1), 16),
       endAt: at(nextWeekday(3, 1), 17, 30),
@@ -1234,7 +1238,7 @@ async function main() {
       sport: "Futsal",
       description:
         "Eight semester squads, twelve matches, one trophy. Group stage runs for two weeks before the knockouts.",
-      coverImage: IMAGES.futsalGoal,
+      coverImage: IMAGES.futsalNight,
       teamCount: 8,
       startAt: at(-10, 16),
       finalAt: at(nextWeekday(6, 3), 17),
@@ -1366,7 +1370,92 @@ async function main() {
     ],
   });
 
-  console.log("Seeded", await prisma.event.count(), "events");
+  const rooms = [
+    {
+      slug: "futsal-court",
+      name: "Futsal Court",
+      topic: "Find a fifth, fix a fixture, argue about the scoreline.",
+      category: "sports",
+    },
+    {
+      slug: "trail-heads",
+      name: "Trail Heads",
+      topic: "Hikes, treks and weekend escapes. Carpools posted here.",
+      category: "trips",
+    },
+    {
+      slug: "green-room",
+      name: "Green Room",
+      topic: "Bands, open mics and jam sessions looking for players.",
+      category: "music",
+    },
+    {
+      slug: "back-row",
+      name: "Back Row",
+      topic: "Movie night picks, screening plans and spoiler-free reactions.",
+      category: "movies",
+    },
+    {
+      slug: "build-lab",
+      name: "Build Lab",
+      topic: "Hackathon teams, project help and late-night debugging.",
+      category: "technology",
+    },
+    {
+      slug: "studio-floor",
+      name: "Studio Floor",
+      topic: "Paint, clay, film and everything drying on the studio shelf.",
+      category: "art",
+    },
+    {
+      slug: "lan-party",
+      name: "LAN Party",
+      topic: "Squads, chess ladders and console nights.",
+      category: "gaming",
+    },
+    {
+      slug: "society-desk",
+      name: "Society Desk",
+      topic: "Organizers coordinating events, venues and volunteers.",
+      category: "societies",
+    },
+  ];
+
+  for (const room of rooms) {
+    const record = await prisma.chatRoom.create({ data: room });
+    await prisma.chatRoomMember.createMany({
+      data: [
+        { roomId: record.id, userId: student.id },
+        { roomId: record.id, userId: organizer.id },
+      ],
+    });
+  }
+
+  const futsalRoom = await prisma.chatRoom.findUniqueOrThrow({
+    where: { slug: "futsal-court" },
+  });
+
+  await prisma.chatMessage.createMany({
+    data: [
+      {
+        roomId: futsalRoom.id,
+        userId: organizer.id,
+        body: "Semester 2 vs Semester 4 is confirmed for Wednesday 4 PM, 5v5 on the indoor court.",
+      },
+      {
+        roomId: futsalRoom.id,
+        userId: student.id,
+        body: "We are one short for the Section A squad. Anyone free Wednesday?",
+      },
+      {
+        roomId: futsalRoom.id,
+        userId: organizer.id,
+        body: "Bring both kits, the referee wants contrasting colours this time.",
+      },
+    ],
+  });
+
+  console.log("Seeded", await prisma.event.count(), "events and", rooms.length, "rooms");
 }
 
 main()

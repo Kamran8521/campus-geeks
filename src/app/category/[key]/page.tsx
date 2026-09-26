@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CalendarDays, MapPin, Play, Ticket } from "lucide-react";
+import { CategoryTheme } from "@/components/category-theme";
 import { EventCard } from "@/components/event-card";
 import { Reveal } from "@/components/reveal";
 import { StatusPill } from "@/components/status-pill";
@@ -145,6 +146,7 @@ export default async function CategoryPage({ params }: Props) {
 
   return (
     <div className="grain">
+      <CategoryTheme category={category} />
       <section className="relative overflow-hidden border-b border-[color:var(--color-line)]">
         <Image
           src={category.cover}
