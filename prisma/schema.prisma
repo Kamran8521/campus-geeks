@@ -1,0 +1,171 @@
+// Campus Geeks — campus social & activities platform
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/// Roles: STUDENT | ORGANIZER | ADMIN (SQLite has no native enums)
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  role         String     @default("STUDENT")
+  department   String?
+  semester     String?
+  /// Comma separated category keys powering the personal feed
+  interests    String     @default("")
+  createdAt    DateTime   @default(now())
+
+  events    Event[]    @relation("CreatedEvents")
+  bookmarks Bookmark[]
+}
+
+model Society {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  shortName   String?
+  description String
+  logoImage   String?
+  accent      String   @default("#7C5CFF")
+  website     String?
+  instagram   String?
+  email       String?
+  createdAt   DateTime @default(now())
+
+  events Event[]
+}
+
+/// Status: DRAFT | PENDING | APPROVED | REGISTRATION_CLOSED | CANCELLED | COMPLETED
+model Event {
+  id          String @id @default(cuid())
+  slug        String @unique
+  title       String
+  subtitle    String?
+  description String
+  /// Category key, see src/lib/categories.ts
+  category    String
+  /// Optional finer grained label, e.g. "Pottery", "Hackathon"
+  tag         String?
+  coverImage  String?
+
+  startAt DateTime
+  endAt   DateTime?
+
+  venue          String
+  campusLocation String?
+
+  capacity         Int?
+  participantCount Int     @default(0)
+  cost             Int     @default(0)
+  costNote         String?
+  eligibility      String?
+
+  registrationRequired Boolean @default(true)
+  googleFormUrl        String?
+
+  /// Placeholders for the future Google Forms -> Sheets -> platform sync
+  googleSheetId    String?
+  autoSyncEnabled  Boolean   @default(false)
+  lastSyncedAt     DateTime?
+
+  organizerName String
+  contactInfo   String?
+  societyId     String?
+  society       Society? @relation(fields: [societyId], references: [id])
+
+  status    String   @default("PENDING")
+  featured  Boolean  @default(false)
+  interest  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  createdById String?
+  createdBy   User?   @relation("CreatedEvents", fields: [createdById], references: [id])
+
+  // Trip specific
+  tripDeparture      String?
+  tripReturn         String?
+  tripDeparturePoint String?
+  /// Comma separated
+  tripIncluded       String?
+  /// Comma separated
+  tripBring          String?
+
+  match     SportsMatch?
+  bookmarks Bookmark[]
+
+  @@index([status, startAt])
+  @@index([category])
+}
+
+/// matchType: FRIENDLY | TOURNAMENT | LEAGUE
+model SportsMatch {
+  id      String @id @default(cuid())
+  eventId String @unique
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  sport     String
+  teamA     String
+  teamB     String
+  teamAMeta String?
+  teamBMeta String?
+  matchType String  @default("FRIENDLY")
+
+  scoreA           Int?
+  scoreB           Int?
+  resultRecordedAt DateTime?
+
+  round        String?
+  tournamentId String?
+  tournament   Tournament? @relation(fields: [tournamentId], references: [id])
+}
+
+/// status: UPCOMING | ONGOING | COMPLETED
+model Tournament {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  sport       String
+  description String
+  coverImage  String?
+  teamCount   Int      @default(0)
+  startAt     DateTime
+  finalAt     DateTime?
+  status      String   @default("UPCOMING")
+  createdAt   DateTime @default(now())
+
+  matches SportsMatch[]
+  teams   TournamentTeam[]
+}
+
+model TournamentTeam {
+  id           String     @id @default(cuid())
+  tournamentId String
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  name         String
+  played       Int        @default(0)
+  won          Int        @default(0)
+  drawn        Int        @default(0)
+  lost         Int        @default(0)
+  points       Int        @default(0)
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  eventId   String
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
+}
