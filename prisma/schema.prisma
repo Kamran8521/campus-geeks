@@ -7,7 +7,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 /// Roles: STUDENT | ORGANIZER | ADMIN (SQLite has no native enums)

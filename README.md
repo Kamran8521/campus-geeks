@@ -7,16 +7,22 @@ society events and everything else happening around campus this week.
 
 - Next.js 16 (App Router, Server Actions, Turbopack)
 - TypeScript, Tailwind CSS v4, Framer Motion, Lucide icons
-- Prisma 7 with SQLite locally, Supabase Postgres ready (driver adapters)
+- Prisma 7 on Postgres (`@prisma/adapter-pg`), deployed on Prisma Compute
 - Signed HTTP-only cookie sessions (HMAC-SHA256), restricted to campus email addresses
 
 ## Getting started
 
 ```bash
 npm install
-cp .env.example .env
-npm run setup    # migrate + generate + seed
+cp .env.example .env   # point DATABASE_URL at a Postgres server
+npm run setup          # migrate + generate + seed
 npm run dev
+```
+
+A throwaway local database:
+
+```bash
+docker run -d --name campus-pg -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=campus -p 5432:5432 postgres:16
 ```
 
 The app runs at http://localhost:3000.
@@ -61,12 +67,21 @@ Only `@uetpeshawar.edu.pk` addresses can sign up or sign in. The domain and camp
 from `NEXT_PUBLIC_CAMPUS_EMAIL_DOMAIN` / `NEXT_PUBLIC_CAMPUS_NAME` and are enforced in
 `src/app/actions/auth.ts` through `src/lib/campus.ts`.
 
-## Supabase and Clerk
+## Deployment
 
-The database layer picks its Prisma driver adapter from `DATABASE_URL`: a `postgres...` URL uses
-the Postgres adapter (Supabase), anything else uses local SQLite. To move to Supabase set
-`DATABASE_URL` to the Supabase connection string, change `provider` to `postgresql` in
-`prisma/schema.prisma`, then run `npx prisma migrate dev --config prisma7.config.ts`.
+The app deploys to [Prisma Compute](https://www.prisma.io/docs) with `output: "standalone"`:
+
+```bash
+npx @prisma/cli@latest app deploy --framework nextjs --env .env
+```
+
+Deploys do not run migrations. Point `DATABASE_URL` at the production database and run
+`npm run db:push` (and `npm run seed` for demo data) separately.
+
+## Database and Clerk
+
+Any Postgres connection string works in `DATABASE_URL` — Prisma Postgres, Supabase or a local
+server. Migrations live in `prisma/migrations` and target `postgresql`.
 
 Clerk keys (`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`) are reserved in
 `.env.example`. Session handling lives behind `src/lib/auth.ts` (`getSessionUser`, `requireUser`,
