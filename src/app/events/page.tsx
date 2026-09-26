@@ -65,12 +65,12 @@ export default async function EventsPage({ searchParams }: { searchParams: Searc
         ...(q
           ? {
               OR: [
-                { title: { contains: q } },
-                { description: { contains: q } },
-                { venue: { contains: q } },
-                { organizerName: { contains: q } },
-                { tag: { contains: q } },
-                { match: { is: { OR: [{ teamA: { contains: q } }, { teamB: { contains: q } }, { sport: { contains: q } }] } } },
+                { title: { contains: q, mode: "insensitive" } },
+                { description: { contains: q, mode: "insensitive" } },
+                { venue: { contains: q, mode: "insensitive" } },
+                { organizerName: { contains: q, mode: "insensitive" } },
+                { tag: { contains: q, mode: "insensitive" } },
+                { match: { is: { OR: [{ teamA: { contains: q, mode: "insensitive" } }, { teamB: { contains: q, mode: "insensitive" } }, { sport: { contains: q, mode: "insensitive" } }] } } },
               ],
             }
           : {}),
